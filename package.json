@@ -1,0 +1,23 @@
+{
+  "name": "ld34-game",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "ShaD",
+  "license": "ISC",
+  "dependencies": {
+    "pixi.js": "github:goodboydigital/pixi.js"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chriteixeira/ld34.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chriteixeira/ld34/issues"
+  },
+  "homepage": "https://github.com/chriteixeira/ld34#readme"
+}
