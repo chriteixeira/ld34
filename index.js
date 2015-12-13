@@ -1,9 +1,11 @@
 var PIXI = require('pixi');
 
-var keyboard = require('./keyboard.js');
+var GameManager = require('./game-manager.js');
 var Scenario = require('./scenario.js');
-var Player = require('./player.js');
 var TextObject = require('./text-object.js');
+var Player = require('./player.js');
+var SceneObject = require('./scene-object.js');
+
 
 var renderer = new PIXI.CanvasRenderer(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.view);
@@ -13,9 +15,10 @@ var graphics = new PIXI.Graphics();
 
 //create the game objects
 var scenario = new Scenario(PIXI, PIXI.Texture.fromImage('assets/images/bg-far.jpg'), window.innerWidth, window.innerHeight);
-var fpsText = new TextObject(PIXI, "FPS: ", {font: '35px Arial'}, {x: 0, y: 0});
+var fpsText = new TextObject(PIXI, "FPS: ", {font: '24px Arial'}, {x: 0, y: 0});
 var player = new Player(PIXI, PIXI.Texture.fromImage('assets/images/player.png'),{width: 50, height: 50},{x: 200, y: 600});
 
+//Control data
 var lastDate = new Date();
 var lastDateSeconds = new Date();
 
@@ -24,24 +27,7 @@ scenario.addScenario(stage);
 player.addPlayer(stage);
 fpsText.addText(stage);
 
-var left = keyboard.addKey(keyboard.KEY_ARROW_LEFT),
-	right = keyboard.addKey(keyboard.KEY_ARROW_RIGHT);
-	
-right.press = function(){
-	scenario.increase(0.5);
-	player.increase(0.01);
-};
-
-right.release = function(){
-};
-
-left.press = function(){
-	scenario.decrease(0.5);
-	player.decrease(0.01);
-};
-
-left.release = function(){
-};
+var gameManager = new GameManager(PIXI, stage, scenario, player);
 
 gameLoop();
 
@@ -50,8 +36,8 @@ function gameLoop(){
 	var date = new Date();
 	
 	requestAnimationFrame(gameLoop);
-	scenario.executeAnimation();
-	player.executeAnimation();
+	
+	gameManager.animate();
 	
 	//Updates once a second
 	if( date.getTime() - lastDateSeconds.getTime() > 1000 ){

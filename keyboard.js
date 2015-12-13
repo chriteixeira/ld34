@@ -1,6 +1,8 @@
 var keyboard = {};
 
+keyboard.KEY_ARROW_UP = 36;
 keyboard.KEY_ARROW_LEFT = 37;
+keyboard.KEY_ARROW_DOWN = 38;
 keyboard.KEY_ARROW_RIGHT = 39;
 
 //FIXME deal with repeated calls
@@ -43,5 +45,7 @@ keyboard.addKey = function(code){
 }
 
 module.exports.addKey = keyboard.addKey;
+module.exports.KEY_ARROW_UP = keyboard.KEY_ARROW_UP;
+module.exports.KEY_ARROW_DOWN = keyboard.KEY_ARROW_DOWN;
 module.exports.KEY_ARROW_LEFT = keyboard.KEY_ARROW_LEFT;
 module.exports.KEY_ARROW_RIGHT = keyboard.KEY_ARROW_RIGHT;

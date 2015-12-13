@@ -14,8 +14,13 @@ Player.prototype.addPlayer = function(stage){
 	stage.addChild(this.sprite);
 }
 
-Player.prototype.executeAnimation = function(){
+Player.prototype.executeAnimation = function(collisionManager){
 	this.sprite.rotation += this.velocity;
+	
+	//Simulate the gravity (the player will fall until it hit the ground)
+	if( !collisionManager.hitGround() ){
+		this.sprite.position.y += 1;
+	}
 }
 
 Player.prototype.increase = function(factor){
