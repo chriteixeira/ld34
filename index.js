@@ -22,8 +22,8 @@ var settings = JSON.parse('{ '+
 				'},'+
 				'"size": 70'+
 			'},'+
-			'"angularVelocity": 0.2,'+
-			'"gravity": 30,'+
+			'"angularVelocity": 0.1,'+
+			'"gravity": 5,'+
 			'"factor": 0.15'+
 	'}');
 settings.linearVelocity = getLinearVelocity(settings.angularVelocity, settings.player.width);
@@ -37,9 +37,9 @@ var stage = new PIXI.Stage(0x000000);
 var graphics = new PIXI.Graphics();
 
 //create the game objects
-var scenario = new Scenario(PIXI, PIXI.Texture.fromImage('assets/images/bg_far.png'), window.innerWidth, window.innerHeight, settings.linearVelocity, settings.factor);
+var scenario = new Scenario(PIXI, PIXI.Texture.fromImage('assets/images/bg_far.png'), window.innerWidth, window.innerHeight, settings.linearVelocity);
 var fpsText = new TextObject(PIXI, "FPS: ", {font: '24px Arial'}, {x: 0, y: 0});
-var player = new Player(PIXI, PIXI.Texture.fromImage('assets/images/player.png'),{width: settings.player.width, height: settings.player.height},settings.player.position, settings.angularVelocity, settings.factor);
+var player = new Player(PIXI, PIXI.Texture.fromImage('assets/images/player.png'),{width: settings.player.width, height: settings.player.height},settings.player.position, settings.angularVelocity, settings.gravity);
 
 //Control data
 var lastDate = new Date();

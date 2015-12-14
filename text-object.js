@@ -10,7 +10,7 @@ TextObject.prototype.addText = function(stage){
 
 TextObject.prototype.executeAnimation = function(text){
 	if( text != undefined ){
-		this.text.setText(text);
+		this.text.text = text;
 	}
 }
 

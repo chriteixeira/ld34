@@ -13,22 +13,33 @@ CollisionManager.prototype.hitGround = function(){
 	for(var i=0; i < this.sceneObjectManager.groundObjects.length; i++){
 		var player = this.player.sprite;
 		var obj = this.sceneObjectManager.groundObjects[i].sprite;
-		var a = [obj.position.x - obj.width/2, obj.position.y];
-		var b = [obj.position.x + obj.width/2, obj.position.y];
+		var line = this.sceneObjectManager.groundObjects[i].getGroundLine();
 		var circle = [player.position.x,player.position.y];
-		if(collide(a, b, circle, player.width)){
-			return true;
+		if(collide(line.a, line.b, circle, player.width/2)){
+			return this.sceneObjectManager.groundObjects[i];
 		}
+		
+		//var r1 = {x: player.position.x - player.width/2,
+		//		  y: player.position.y - player.height/2,
+		//		  width: player.width,
+		//		  height: player.height},
+		//	r2 = {x: obj.position.x,
+		//		  y: obj.position.y,
+		//		  width: obj.width,
+		//		  height: obj.height};
+		//if( isIntersecting(r1, r2)){
+		//	return this.sceneObjectManager.groundObjects[i];
+		//}
 	}
-	return false;
+	return undefined;
 }
 
 
 function isIntersecting(r1, r2) {
-	return !(r2.position.x >= (r1.position.x + r1.width) || 
-    	       (r2.position.x + r2.width) <= r1.position.x || 
-        	   r2.position.y >= (r1.position.y + r1.height) ||
-           	   (r2.position.y + r2.height) <= r1.position.y);
+	return !(r2.x >= (r1.x + r1.width) || 
+    	       (r2.x + r2.width) <= r1.x || 
+        	   r2.y >= (r1.y + r1.height) ||
+           	   (r2.y + r2.height) <= r1.y);
 }
 
 
