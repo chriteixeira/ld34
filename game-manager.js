@@ -15,26 +15,22 @@ function GameManager(PIXI, stage, scenario, player, settings){
 	this.collisionManager = new CollisionManager(this.player, this.sceneObjectManager);
 		
 	this.configureKeyboard();
-	this.createGroundObjects();
+}
+
+GameManager.prototype.proceduralGeneration = function(){
+	sceneObjectManager.proceduralGeneration();
 }
 
 GameManager.prototype.animate = function(){
+	this.sceneObjectManager.animate();
 	this.player.executeAnimation(this.collisionManager);
 	this.scenario.executeAnimation();
-	this.sceneObjectManager.animate();
-	this.sceneObjectManager.decay();
+	
 };
 
-GameManager.prototype.createGroundObjects = function(){
-	for(var i=0; i < 15; i++){
-		this.sceneObjectManager.createGroundObj(this.stage, {x: 70 * i, y: 600});
-	}
-	
-	this.sceneObjectManager.createGroundUpObj(this.stage, {x: 70 * 15, y: 600});
-	this.sceneObjectManager.createGroundUpObj(this.stage, {x: 70 * 16, y: 600-70});
-	this.sceneObjectManager.createGroundUpObj(this.stage, {x: 70 * 17, y: 600-70-70});
-	this.sceneObjectManager.createGroundDownObj(this.stage, {x: 70 * 18, y: 600-70-70-70});
-};
+GameManager.prototype.decay = function(){
+	this.sceneObjectManager.decay();
+}
 
 GameManager.prototype.configureKeyboard = function(){
 	var dec = keyboard.addKey(keyboard.KEY_ARROW_DOWN),

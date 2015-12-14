@@ -10,10 +10,10 @@ var settings = JSON.parse('{ '+
 			'"player": { ' +
 				'"position":{ '+ 
 					'"x": 200, '+
-					'"y": 500' +
+					'"y": 400' +
 				'},'+
-				'"width": 50,'+
-				'"height" : 50'+
+				'"width": 75,'+
+				'"height" : 75'+
 			'},'+
 			'"groundtile": {'+
 				'"position": {'+
@@ -51,6 +51,11 @@ player.addPlayer(stage);
 fpsText.addText(stage);
 
 var gameManager = new GameManager(PIXI, stage, scenario, player, settings);
+
+setInterval(function(){ gameManager.decay(); }, 1);
+setInterval(function(){ gameManager.proceduralGeneration(); }, 1);
+
+
 
 gameLoop();
 

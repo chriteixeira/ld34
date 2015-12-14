@@ -41,7 +41,7 @@ Player.prototype.increase = function(factor){
 Player.prototype.decrease = function(factor){
 	this.sprite.width -= this.sprite.width * factor;
 	this.sprite.height -= this.sprite.height * factor;
-	this.sprite.position.y += this.sprite.height * factor / 2;
+	//this.sprite.position.y += this.sprite.height * factor / 2;
 };
 
 

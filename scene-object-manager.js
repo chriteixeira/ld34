@@ -18,6 +18,9 @@ function SceneObjectManager(PIXI, stage, settings){
 	this.stage = stage;
 	
 	this.settings = settings;
+	this.nextGroundPosition = settings.groundtile.position;
+	
+	this.proceduralGeneration();
 }
 
 SceneObjectManager.prototype.animate = function(){
@@ -25,7 +28,14 @@ SceneObjectManager.prototype.animate = function(){
 	this.animateObjectList(this.pickups);
 	this.animateObjectList(this.obstacles);
 	this.animateObjectList(this.nonSolid);
+	this.nextGroundPosition = this.createRandomGroundObj(this.stage, this.nextGroundPosition);
 };
+
+SceneObjectManager.prototype.proceduralGeneration = function(){
+	while(this.groundObjects.length < CONSTANTS.OBJ_BUFFER){
+		this.nextGroundPosition = this.createRandomGroundObj(this.stage, this.nextGroundPosition);
+	}
+}
 
 SceneObjectManager.prototype.animateObjectList = function(list){
 	for(var i=0; i < list.length; i++){
@@ -59,6 +69,21 @@ SceneObjectManager.prototype.decreaseList = function(list, factor){
 	}
 };
 
+SceneObjectManager.prototype.createRandomGroundObj = function(stage, position){
+	 var r = getRandomInt(0, 2);
+	 var resultPos = position;
+	 if(r === 0){
+		 resultPos = this.createGroundObj(stage, position);
+	 }
+	 else if(r === 1 && CONSTANTS.OBJECT_TYPE_GROUND_MAX < position.y){
+		 resultPos = this.createGroundUpObj(stage, position);
+	 }
+	 else if(r === 2 && CONSTANTS.OBJECT_TYPE_GROUND_MIN > position.y){
+		 resultPos = this.createGroundDownObj(stage, position);
+	 }
+	 return resultPos;
+};
+
 /*
  * Create a basic ground object. 
  * 
@@ -76,7 +101,9 @@ SceneObjectManager.prototype.createGroundObj = function(stage, position){
 	this.groundObjects.push(obj);
 	obj.addObject(stage);
 	
-	//return position;
+	position.x = position.x + CONSTANTS.TILE_SIZE;
+	
+	return position;
 };
 
 /*
@@ -110,7 +137,9 @@ SceneObjectManager.prototype.createGroundUpObj = function(stage, position){
 	obj.addObject(stage);
 	obj2.addObject(stage);
 	
-	//return newPosition;
+	newPosition.x = newPosition.x + CONSTANTS.TILE_SIZE;
+	
+	return newPosition;
 };
 
 /*
@@ -144,7 +173,9 @@ SceneObjectManager.prototype.createGroundDownObj = function(stage, position){
 	obj.addObject(stage);
 	obj2.addObject(stage);	
 	
-	//return newPosition;
+	newPosition.x = newPosition.x + CONSTANTS.TILE_SIZE;
+	
+	return newPosition;
 };
 
 /*
@@ -164,14 +195,19 @@ SceneObjectManager.prototype.decay = function(){
  * apperance, we just need to check the first object
  */
 SceneObjectManager.prototype.decayObjectList = function(list){
-	if(list.length > 0 && list[0].isOutOfScene()){
+	while(list.length > 0 && list[0].isOutOfScene()){
 		var obj = list.shift();
 		obj.removeObject(this.stage);
+		console.log('decaying' + obj);
 	}	
 };
 
 function getLinearVelocity(angularVelocity, radius){
 	return radius * angularVelocity;
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 module.exports = SceneObjectManager;
