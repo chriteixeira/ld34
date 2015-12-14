@@ -1,4 +1,4 @@
-var PIXI = require('pixi');
+var PIXI = require('pixi.js');
 
 var GameManager = require('./game-manager.js');
 var Scenario = require('./scenario.js');
@@ -29,7 +29,9 @@ var settings = JSON.parse('{ '+
 settings.linearVelocity = getLinearVelocity(settings.angularVelocity, settings.player.width);
 
 var renderer = new PIXI.CanvasRenderer(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.view);
+window.onload = function() {
+	document.body.appendChild(renderer.view);
+};
 
 var stage = new PIXI.Stage(0x000000);
 var graphics = new PIXI.Graphics();
@@ -78,4 +80,3 @@ function getFPS(){
 	return Math.floor(1000 / (new Date().getTime() - lastDate.getTime()));
 	
 }
-
