@@ -24,19 +24,22 @@ Player.prototype.executeAnimation = function(collisionManager){
 }
 
 Player.prototype.increase = function(factor){
-	this.sprite.scale.x += factor;
-	this.sprite.scale.y += factor;
+	this.sprite.width += factor;
+	this.sprite.height += factor;
+	this.sprite.position.y -= factor/2;
+	
 	if(this.velocity - factor > 0.01){
 		this.velocity -= factor;
 	}
 }
 
 Player.prototype.decrease = function(factor){
-	if(this.sprite.scale.x - factor > 0.1){
-		this.sprite.scale.x -= factor;
+	if(this.sprite.width - factor > 0.1){
+		this.sprite.width -= factor;
 	}
-	if(this.sprite.scale.y - factor > 0.1 ){
-		this.sprite.scale.y -= factor;
+	if(this.sprite.height - factor > 0.1 ){
+		this.sprite.height -= factor;
+		this.sprite.position.y += factor/2;
 	}
 	this.velocity += factor;
 }

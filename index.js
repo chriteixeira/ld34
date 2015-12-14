@@ -14,9 +14,9 @@ var stage = new PIXI.Stage(0x000000);
 var graphics = new PIXI.Graphics();
 
 //create the game objects
-var scenario = new Scenario(PIXI, PIXI.Texture.fromImage('assets/images/bg-far.jpg'), window.innerWidth, window.innerHeight);
+var scenario = new Scenario(PIXI, PIXI.Texture.fromImage('assets/images/bg_far.png'), window.innerWidth, window.innerHeight);
 var fpsText = new TextObject(PIXI, "FPS: ", {font: '24px Arial'}, {x: 0, y: 0});
-var player = new Player(PIXI, PIXI.Texture.fromImage('assets/images/player.png'),{width: 50, height: 50},{x: 200, y: 600});
+var player = new Player(PIXI, PIXI.Texture.fromImage('assets/images/player.png'),{width: 50, height: 50},{x: 200, y: 500});
 
 //Control data
 var lastDate = new Date();

@@ -19,7 +19,6 @@ function GameManager(PIXI, stage, scenario, player){
 	this.collisionManager = new CollisionManager(this);
 }
 
-
 GameManager.prototype.animate = function(){
 	this.player.executeAnimation(this.collisionManager);
 	this.scenario.executeAnimation();
@@ -38,11 +37,15 @@ GameManager.prototype.animateObjectList = function(list){
 
 GameManager.prototype.createGroundObjects = function(){
 	var texture = this.PIXI.Texture.fromImage('assets/images/ground.png');
-	for(var i=0; i < 10; i++){
-		var obj = new SceneObject(this.PIXI, CONSTANTS.OBJECT_TYPE_GROUND, texture, {width: 220, height: 70}, {x: 220 * i, y: 700});
+	for(var i=0; i < 15; i++){
+		var obj = new SceneObject(this.PIXI, CONSTANTS.OBJECT_TYPE_GROUND, texture, {width: 70, height: 70}, {x: 70 * i, y: 600});
 		this.groundObjects.push(obj);
 		obj.addObject(this.stage);
 	}
+	var obj2 = new SceneObject(this.PIXI, CONSTANTS.OBJECT_TYPE_GROUND, this.PIXI.Texture.fromImage('assets/images/ground_up.png'), {width: 70, height: 70}, {x: 70 * 14, y: 530});
+	//obj2.sprite.rotation = -0.5;
+	this.groundObjects.push(obj2);
+	obj2.addObject(this.stage);
 }
 
 
@@ -50,9 +53,12 @@ GameManager.prototype.configureKeyboard = function(){
 	var left = keyboard.addKey(keyboard.KEY_ARROW_UP),
 		right = keyboard.addKey(keyboard.KEY_ARROW_DOWN);
 	
+	var scenario = this.scenario;
+	var player = this.player;
+	
 	right.press = function(){
-		this.scenario.increase(0.5);
-		this.player.increase(0.01);
+		scenario.increase(0.5);
+		player.increase(5);
 	};
 	
 	right.release = function(){
@@ -60,7 +66,7 @@ GameManager.prototype.configureKeyboard = function(){
 	
 	left.press = function(){
 		this.scenario.decrease(0.5);
-		this.player.decrease(0.01);
+		this.player.decrease(5);
 	};
 	
 	left.release = function(){
