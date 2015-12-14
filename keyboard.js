@@ -1,9 +1,9 @@
 var keyboard = {};
 
-keyboard.KEY_ARROW_UP = 36;
 keyboard.KEY_ARROW_LEFT = 37;
-keyboard.KEY_ARROW_DOWN = 38;
+keyboard.KEY_ARROW_UP = 38;
 keyboard.KEY_ARROW_RIGHT = 39;
+keyboard.KEY_ARROW_DOWN = 40;
 
 //FIXME deal with repeated calls
 

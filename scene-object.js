@@ -1,6 +1,6 @@
 var CONSTANTS = require('./constants.js');
 
-function SceneObject(PIXI, type, texture, size, position){
+function SceneObject(PIXI, type, subtype, texture, size, position, solid){
 	this.type = type;
 	this.sprite = new PIXI.Sprite(texture);
 	this.sprite.anchor.x = 0.5;
@@ -10,6 +10,7 @@ function SceneObject(PIXI, type, texture, size, position){
 	this.sprite.width = size.width;
 	this.sprite.height = size.height;
 	this.velocity = 1;
+	this.solid = solid;
 }
 
 SceneObject.prototype.addObject = function(stage){

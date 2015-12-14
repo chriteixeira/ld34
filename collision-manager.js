@@ -1,22 +1,18 @@
 var CONSTANTS = require('./constants.js');
 var collide = require('line-circle-collision')
 
-var collide = require('line-circle-collision');
-
-function CollisionManager(gameManager){
-	this.gameManager = gameManager;
+function CollisionManager(player, sceneObjectManager){
+	this.sceneObjectManager = sceneObjectManager;
+	this.player = player;
 }
 
 /*
  * Check if the player has hit the ground
  */
 CollisionManager.prototype.hitGround = function(){
-	for(var i=0; i < this.gameManager.groundObjects.length; i++){
-		//if(isIntersecting(this.gameManager.player.sprite, this.gameManager.groundObjects[i].sprite)){
-		//	return true;
-		//}
-		var player = this.gameManager.player.sprite;
-		var obj = this.gameManager.groundObjects[i].sprite;
+	for(var i=0; i < this.sceneObjectManager.groundObjects.length; i++){
+		var player = this.player.sprite;
+		var obj = this.sceneObjectManager.groundObjects[i].sprite;
 		var a = [obj.position.x - obj.width/2, obj.position.y];
 		var b = [obj.position.x + obj.width/2, obj.position.y];
 		var circle = [player.position.x,player.position.y];
