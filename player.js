@@ -1,5 +1,5 @@
 
-function Player(PIXI, texture, size, position){
+function Player(PIXI, texture, size, position, angularVelocity){
 	this.sprite = new PIXI.Sprite(texture);
 	this.sprite.anchor.x = 0.5;
 	this.sprite.anchor.y = 0.5;
@@ -7,12 +7,12 @@ function Player(PIXI, texture, size, position){
 	this.sprite.position.y = position.y;
 	this.sprite.width = size.width;
 	this.sprite.height = size.height;
-	this.velocity = 0.1;
+	this.velocity = angularVelocity;
 }
 
 Player.prototype.addPlayer = function(stage){
 	stage.addChild(this.sprite);
-}
+};
 
 Player.prototype.executeAnimation = function(collisionManager){
 	this.sprite.rotation += this.velocity;
@@ -21,26 +21,19 @@ Player.prototype.executeAnimation = function(collisionManager){
 	if( !collisionManager.hitGround() ){
 		this.sprite.position.y += 1;
 	}
-}
+};
 
 Player.prototype.increase = function(factor){
-	this.sprite.width += factor;
-	this.sprite.height += factor;
-	this.sprite.position.y -= factor/2;
-	
-	if(this.velocity - factor > 0.01){
-		this.velocity -= factor;
-	}
-}
+	this.sprite.scale.x += factor * this.sprite.scale.x;
+	this.sprite.scale.y += factor * this.sprite.scale.y;
+	//this.sprite.position.y -= this.sprite.heigth * factor / 2;
+};
 
 Player.prototype.decrease = function(factor){
-	if(this.sprite.width - factor > 0.1){
-		this.sprite.width -= factor;
-		this.sprite.height -= factor;
-		this.sprite.position.y += factor/2;
-	}
-	this.velocity += factor;
-}
+	this.sprite.scale.x -= factor * this.sprite.scale.x;
+	this.sprite.scale.y -= factor * this.sprite.scale.y;
+	//this.sprite.position.y += this.sprite.heigth * factor / 2;
+};
 
 
 module.exports = Player;

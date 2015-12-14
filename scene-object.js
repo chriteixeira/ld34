@@ -1,6 +1,6 @@
 var CONSTANTS = require('./constants.js');
 
-function SceneObject(PIXI, type, subtype, texture, size, position, solid){
+function SceneObject(PIXI, type, subtype, texture, size, position, solid, velocity){
 	this.type = type;
 	this.sprite = new PIXI.Sprite(texture);
 	this.sprite.anchor.x = 0.5;
@@ -9,7 +9,7 @@ function SceneObject(PIXI, type, subtype, texture, size, position, solid){
 	this.sprite.position.y = position.y;
 	this.sprite.width = size.width;
 	this.sprite.height = size.height;
-	this.velocity = 1;
+	this.velocity = velocity;
 	this.solid = solid;
 }
 
@@ -21,8 +21,16 @@ SceneObject.prototype.removeObject = function(stage){
 	stage.removeChild(this.sprite);
 };
 
-SceneObject.prototype.executeAnimation = function(){
+SceneObject.prototype.executeAnimation = function(factor){
 	this.sprite.position.x -= this.velocity;
+};
+
+SceneObject.prototype.increase = function(factor){
+	this.velocity -= factor * this.velocity;
+};
+
+SceneObject.prototype.decrease = function(factor){
+	this.velocity += factor * this.velocity;
 };
 
 SceneObject.prototype.isOutOfScene = function(){

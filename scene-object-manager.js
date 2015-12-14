@@ -2,7 +2,7 @@ var CONSTANTS = require('./constants.js');
 var SceneObject = require('./scene-object.js');
 var CollisionManager = require('./collision-manager.js');
 
-function SceneObjectManager(PIXI){
+function SceneObjectManager(PIXI, stage, settings){
 	this.PIXI = PIXI;
 	this.textures = {
 			ground: PIXI.Texture.fromImage('assets/images/ground.png'),
@@ -14,6 +14,10 @@ function SceneObjectManager(PIXI){
 	this.pickups = [];
 	this.obstacles = [];
 	this.nonSolid = [];
+	
+	this.stage = stage;
+	
+	this.settings = settings;
 }
 
 SceneObjectManager.prototype.animate = function(){
@@ -29,6 +33,32 @@ SceneObjectManager.prototype.animateObjectList = function(list){
 	}
 };
 
+SceneObjectManager.prototype.increase = function(factor){
+	this.increaseList(this.groundObjects, factor);
+	this.increaseList(this.pickups, factor);
+	this.increaseList(this.obstacles, factor);
+	this.increaseList(this.nonSolid, factor);
+};
+
+SceneObjectManager.prototype.decrease = function(factor){
+	this.decreaseList(this.groundObjects, factor);
+	this.decreaseList(this.pickups, factor);
+	this.decreaseList(this.obstacles, factor);
+	this.decreaseList(this.nonSolid, factor);
+};
+
+SceneObjectManager.prototype.increaseList = function(list, factor){
+	for(var i=0; i < list.length; i++){
+		list[i].increase(factor);
+	}
+};
+
+SceneObjectManager.prototype.decreaseList = function(list, factor){
+	for(var i=0; i < list.length; i++){
+		list[i].decrease(factor);
+	}
+};
+
 /*
  * Create a basic ground object. 
  * 
@@ -41,7 +71,8 @@ SceneObjectManager.prototype.createGroundObj = function(stage, position){
 								this.textures.ground, 
 								{width: CONSTANTS.TILE_SIZE,height: CONSTANTS.TILE_SIZE}, 
 								position, 
-								true );
+								true,
+								this.settings.linearVelocity );
 	this.groundObjects.push(obj);
 	obj.addObject(stage);
 	
@@ -62,7 +93,8 @@ SceneObjectManager.prototype.createGroundUpObj = function(stage, position){
 								this.textures.ground_up, 
 								{width: CONSTANTS.TILE_SIZE,height: CONSTANTS.TILE_SIZE}, 
 								newPosition, 
-								true );
+								true,
+								this.settings.linearVelocity );
 								
 	var obj2 = new SceneObject(  this.PIXI, 
 								CONSTANTS.OBJECT_TYPE_GROUND,
@@ -70,7 +102,8 @@ SceneObjectManager.prototype.createGroundUpObj = function(stage, position){
 								this.textures.ground, 
 								{width: CONSTANTS.TILE_SIZE,height: CONSTANTS.TILE_SIZE}, 
 								position, 
-								false );
+								false,
+								this.settings.linearVelocity );
 	this.groundObjects.push(obj);
 	this.nonSolid.push(obj2);
 
@@ -94,7 +127,8 @@ SceneObjectManager.prototype.createGroundDownObj = function(stage, position){
 								this.textures.ground_down, 
 								{width: CONSTANTS.TILE_SIZE,height: CONSTANTS.TILE_SIZE}, 
 								position, 
-								true );
+								true,
+								this.settings.linearVelocity );
 								
 	var obj2 = new SceneObject( this.PIXI, 
 								CONSTANTS.OBJECT_TYPE_GROUND,
@@ -102,7 +136,8 @@ SceneObjectManager.prototype.createGroundDownObj = function(stage, position){
 								this.textures.ground, 
 								{width: CONSTANTS.TILE_SIZE,height: CONSTANTS.TILE_SIZE}, 
 								newPosition, 
-								false );
+								false,
+								this.settings.linearVelocity );
 	this.groundObjects.push(obj);
 	this.nonSolid.push(obj2);
 	
@@ -134,5 +169,9 @@ SceneObjectManager.prototype.decayObjectList = function(list){
 		obj.removeObject(this.stage);
 	}	
 };
+
+function getLinearVelocity(angularVelocity, radius){
+	return radius * angularVelocity;
+}
 
 module.exports = SceneObjectManager;
