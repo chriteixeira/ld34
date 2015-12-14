@@ -26,11 +26,11 @@ SceneObject.prototype.executeAnimation = function(factor){
 };
 
 SceneObject.prototype.increase = function(factor){
-	this.velocity -= factor * this.velocity;
+	this.velocity += factor * this.velocity;
 };
 
 SceneObject.prototype.decrease = function(factor){
-	this.velocity += factor * this.velocity;
+	this.velocity -= factor * this.velocity;
 };
 
 SceneObject.prototype.isOutOfScene = function(){

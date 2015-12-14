@@ -13,11 +13,11 @@ Scenario.prototype.executeAnimation = function(isAcc, isDeAcc, timeElapsed){
 }
 
 Scenario.prototype.increase = function(factor){
-	this.velocity -= factor * this.velocity;
+	this.velocity += factor * this.velocity;
 }
 
 Scenario.prototype.decrease = function(factor){
-	this.velocity += factor * this.velocity;
+	this.velocity -= factor * this.velocity;
 }
 
 module.exports = Scenario;

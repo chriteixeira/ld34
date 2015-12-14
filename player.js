@@ -24,14 +24,14 @@ Player.prototype.executeAnimation = function(collisionManager){
 };
 
 Player.prototype.increase = function(factor){
-	this.sprite.scale.x += factor * this.sprite.scale.x;
-	this.sprite.scale.y += factor * this.sprite.scale.y;
+	this.sprite.width += this.sprite.width * factor;
+	this.sprite.height += this.sprite.height * factor;
 	//this.sprite.position.y -= this.sprite.heigth * factor / 2;
 };
 
 Player.prototype.decrease = function(factor){
-	this.sprite.scale.x -= factor * this.sprite.scale.x;
-	this.sprite.scale.y -= factor * this.sprite.scale.y;
+	this.sprite.width -= this.sprite.width * factor;
+	this.sprite.height -= this.sprite.height * factor;
 	//this.sprite.position.y += this.sprite.heigth * factor / 2;
 };
 
